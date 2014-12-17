@@ -270,15 +270,15 @@ namespace DotNetCasClient.Utils
 
             if (base.Query.Length > 0)
             {
-                string query = HttpUtility.UrlDecode(base.Query.Substring(1));
+                string query = base.Query.Substring(1);
                 string[] items = query.Split('&');
 
                 foreach (string item in items)
                 {
                     if (item.Length > 0)
                     {
-                        string[] namevalue = item.Split('=');
-                        _QueryItems.Add(namevalue[0], namevalue.Length > 1 ? namevalue[1] : String.Empty);
+                        string[] namevalue = item.Split('=', 2);
+                        _QueryItems.Add(namevalue[0], namevalue.Length > 1 ? HttpUtility.UrlDecode(namevalue[1]) : String.Empty);
                     }
                 }
             }
@@ -322,7 +322,7 @@ namespace DotNetCasClient.Utils
                 {
                     foreach (string value in values)
                     {
-                        query += (key + "=" + value + "&");
+                        query += (key + "=" + HttpUtility.UrlEncode(value) + "&");
                     }
                 }
             }
