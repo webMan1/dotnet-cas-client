@@ -277,8 +277,8 @@ namespace DotNetCasClient.Utils
                 {
                     if (item.Length > 0)
                     {
-                        string[] namevalue = item.Split('=', 2);
-                        _QueryItems.Add(namevalue[0], namevalue.Length > 1 ? HttpUtility.UrlDecode(namevalue[1]) : String.Empty);
+                        string[] namevalue = item.Split(new char[] { '=' }, 2);
+                        _QueryItems.Add(namevalue[0], namevalue.Length > 1 ? namevalue[1] : String.Empty);
                     }
                 }
             }
@@ -291,8 +291,8 @@ namespace DotNetCasClient.Utils
         {
             if (_QueryItems != null)
             {
-                // First check if queryItems has been cleared (using 
-                // QueryItems.Clear()), because this doesn't 
+                // First check if queryItems has been cleared (using
+                // QueryItems.Clear()), because this doesn't
                 // update dirty flag!!!
                 if (_QueryItems.Count == 0)
                 {
@@ -322,7 +322,7 @@ namespace DotNetCasClient.Utils
                 {
                     foreach (string value in values)
                     {
-                        query += (key + "=" + HttpUtility.UrlEncode(value) + "&");
+                        query += (key + "=" + value + "&");
                     }
                 }
             }
