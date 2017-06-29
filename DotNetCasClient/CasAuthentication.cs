@@ -330,7 +330,12 @@ namespace DotNetCasClient
                         bool haveServerName = !String.IsNullOrEmpty(serverName);
                         if (!haveServerName)
                         {
-                            LogAndThrowConfigurationException(CasClientConfiguration.SERVER_NAME + " cannot be null or empty.");
+                            string protocol = HttpContext.Current.Request.IsSecureConnection ? "https://" : "http://";
+                            serverName = protocol + HttpContext.Current.Request.Url.Host;
+                            if (HttpContext.Current.Request.Url.Port != 80)
+                            {
+                                serverName = serverName + ":" + HttpContext.Current.Request.Url.Port.ToString();
+                            }
                         }
 
                         if (String.IsNullOrEmpty(casServerLoginUrl))
